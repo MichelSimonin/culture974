@@ -3,7 +3,10 @@
 {% block title %}Events index{% endblock %}
 
 {% block body %}
-    <h1>Events index</h1>
+
+    {# <h1>Tout les évenements</h1> #}
+    <div class="justify-self-center align-self-center min-vh-100 mt-5gi">
+
     <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-medium text-gray-900">Liste des événements</h2>
         <a href="{{ path('app_events_new') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">Créer</a>
@@ -46,4 +49,6 @@
             </table>
         </div>
     </div>
+    </div>
+    
 {% endblock %}
