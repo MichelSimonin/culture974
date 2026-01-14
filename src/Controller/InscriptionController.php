@@ -80,4 +80,26 @@ final class InscriptionController extends AbstractController
 
         return $this->redirectToRoute('app_inscription_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/inscription/{eventId}', name: 'app_inscription', methods: ['GET', 'POST'])]
+    public function inscription(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $inscription = new Inscription();
+        $form = $this->createForm(InscriptionType::class, $inscription);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($inscription);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre inscription a bien été pris en compte.');
+
+            return $this->redirectToRoute('app_inscription_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('inscription/new.html.twig', [
+            'inscription' => $inscription,
+            'form' => $form,
+        ]);
+    }
 }
