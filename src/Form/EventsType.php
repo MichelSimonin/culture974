@@ -36,6 +36,7 @@ class EventsType extends AbstractType
             ->add('category_id', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'nom',
+                'placeholder' => false,
                 'attr' => ['class' => 'mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm'],
             ])
         ;
