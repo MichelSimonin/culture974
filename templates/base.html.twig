@@ -13,6 +13,10 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+            {% for message in app.flashes('success') %}
+                {{ message }}
+            {% endfor %}
+        {% endblock %}
     </body>
 </html>
