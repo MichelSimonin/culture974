@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Events;
 use App\Entity\Inscription;
 use App\Form\InscriptionType;
 use App\Repository\InscriptionRepository;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/inscription')]
+#[Route('/admin/inscription')]
 final class InscriptionController extends AbstractController
 {
     #[Route(name: 'app_inscription_index', methods: ['GET'])]
@@ -82,9 +83,17 @@ final class InscriptionController extends AbstractController
     }
 
     #[Route('/inscription/{eventId}', name: 'app_inscription', methods: ['GET', 'POST'])]
-    public function inscription(Request $request, EntityManagerInterface $entityManager): Response
+    public function inscription($eventId, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $event = $entityManager->getRepository(Events::class)->find($eventId);
+
+        if (!$event) {
+            throw $this->createNotFoundException('Cette page n\'existe pas.');
+        }
+
         $inscription = new Inscription();
+        $inscription->setEvent($event);
+
         $form = $this->createForm(InscriptionType::class, $inscription);
         $form->handleRequest($request);
 

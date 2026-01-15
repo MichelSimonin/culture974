@@ -29,8 +29,8 @@ class Inscription
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'inscriptions')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?events $event_id = null;
+    #[ORM\JoinColumn( nullable: false)]
+    private ?Events $event_id = null;
 
     public function getId(): ?int
     {
@@ -97,14 +97,14 @@ class Inscription
         return $this;
     }
 
-    public function getEventId(): ?events
+    public function getEvent(): ?Events
     {
         return $this->event_id;
     }
 
-    public function setEventId(?events $event_id): static
+    public function setEvent(?Events $event): static
     {
-        $this->event_id = $event_id;
+        $this->event_id = $event;
 
         return $this;
     }
