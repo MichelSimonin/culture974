@@ -12,6 +12,20 @@
         <a href="{{ path('app_events_new') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">Créer</a>
     </div>
 
+    {% if activeCategory %}
+        <div class="mb-4 p-4 rounded-lg border-l-4" style="background-color: {{ activeCategory.couleur }}20; border-color: {{ activeCategory.couleur }};">
+            <div class="flex items-center">
+                <span class="mr-2">{{ activeCategory.icone }}</span>
+                <div>
+                    <p class="font-medium">
+                        Filtré par : <strong>{{ activeCategory.nom }}</strong>
+                    </p>
+                    <p class="text-gray-600">{{ events|length }} événement(s) trouvé(s)</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -50,5 +64,5 @@
         </div>
     </div>
     </div>
-    
+
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Events;
 use App\Form\EventsType;
+use App\Repository\CategoryRepository;
 use App\Repository\EventsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,10 +16,22 @@ use Symfony\Component\Routing\Attribute\Route;
 final class EventsController extends AbstractController
 {
     #[Route(name: 'app_events_index', methods: ['GET'])]
-    public function index(EventsRepository $eventsRepository): Response
+    public function index(Request $request, EventsRepository $eventsRepository, CategoryRepository $categoryRepository): Response
     {
+        $categoryId = $request->query->get('category');
+        $activeCategory = null;
+
+        if ($categoryId) {
+            $activeCategory = $categoryRepository->find($categoryId);
+            $events = $activeCategory ? $activeCategory->getEvents()->toArray() : [];
+        } else {
+            $events = $eventsRepository->findAll();
+        }
+
         return $this->render('events/index.html.twig', [
-            'events' => $eventsRepository->findAll(),
+            'events' => $events,
+            'categories' => $categoryRepository->findAll(),
+            'activeCategory' => $activeCategory,
         ]);
     }
 
