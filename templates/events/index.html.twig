@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Events index{% endblock %}
+
+{% block body %}
+
+    {# <h1>Tout les évenements</h1> #}
+    <div class="justify-self-center align-self-center min-vh-100 mt-5gi">
+
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-medium text-gray-900">Liste des événements</h2>
+        <a href="{{ path('app_events_new') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">Créer</a>
+    </div>
+
+    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Titre</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lieu</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                {% for event in events %}
+                    <tr class="odd:bg-white even:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.id }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.titre }}</td>
+                        <td class="px-6 py-4 whitespace-normal text-sm text-gray-700">{{ event.description }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.date ? event.date|date('Y-m-d') : '' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.lieu }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ event.image }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="{{ path('app_events_show', {'id': event.id}) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Voir</a>
+                            <a href="{{ path('app_events_edit', {'id': event.id}) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    
+{% endblock %}
